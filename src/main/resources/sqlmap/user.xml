@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.putaoteng.mybatis.service.StudentDaoImpl">
+	<resultMap id="userResultMap" type="com.putaoteng.mybatis.model.Student">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="qqNumber" column="qq_number" />
+		<result property="profession" column="profession" />
+		<result property="joinDate" column="join_date" />
+		<result property="school" column="school" />
+		<result property="onlineNumber" column="online_number" />
+		<result property="dailyLink" column="daily_link" />
+		<result property="desire" column="desire" />
+		<result property="msgSource" column="msg_source" />
+		<result property="brother" column="brother" />
+		<result property="createAt" column="create_at" />
+		<result property="updateAt" column="update_at" />
+	</resultMap>
+
+
+	<!-- 通过id查询一条数据 -->
+	<select id="queryStudentById" resultMap="userResultMap" parameterType="long">
+		select * from student where id = #{id}
+	</select>
+
+	<!-- 通过姓名查询数据集合 -->
+	<select id="queryStudentByName" resultMap="userResultMap" parameterType="String">
+		select * from student where name = #{name}
+	</select>
+
+	<!-- 查找表中的所有数据 -->
+	<select id="queryStudentAll" resultMap="userResultMap">
+		select * from student
+	</select>
+
+	<!-- 计算表长度 -->
+	<select id="countTableLength" resultType="java.lang.Integer" parameterType="String">
+		select count(#{field}) from student
+	</select>
+
+	<!-- 插入数据 -->
+	<insert id="addStudent" parameterType="com.putaoteng.mybatis.model.Student">
+		insert into student (id, name, qq_number, profession, join_date, school, online_number, daily_link, desire, msg_source, brother, create_at,update_at) 
+		values (#{id}, #{name}, #{qqNumber}, #{profession}, #{joinDate}, #{school}, #{onlineNumber}, #{dailyLink}, #{desire}, #{msgSource}, #{brother}, #{createAt}, #{updateAt})
+	</insert>
+
+	<!-- 删除数据 -->
+	<delete id="deleteStudent" parameterType="long">
+		delete from student
+		where id = #{id}
+	</delete>
+
+	<!-- 更新数据 -->
+	<update id="updateStudent" parameterType="com.putaoteng.mybatis.model.Student">
+		UPDATE student SET id=#{id}, name=#{name}, qq_number=#{qqNumber}, profession=#{profession}, join_date=#{joinDate}, school=#{school}, online_number=#{onlineNumber}, 
+		daily_link=#{dailyLink}, desire=#{desire}, msg_source=#{msgSource}, brother=#{brother}, create_at=#{createAt}, update_at=#{updateAt} where id=#{id}
+	</update>
+
+	<update id="clearTable">
+		truncate table student
+	</update>
+</mapper>
